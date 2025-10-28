@@ -1,6 +1,6 @@
 [project]
 name = 'poouli'
-version = "0.2.0a1"
+version = "0.2.0a2"
 description = 'Syncronize local files with MediaWiki'
 authors = [
 	{ name = 'Tommi', email = 'surfing@tommi.space' }
@@ -8,7 +8,7 @@ authors = [
 readme = 'README.md'
 license = 'EUPL-1.2'
 license-files = ['LICENSE']
-requires-python = '>=3.13'
+requires-python = '>=3.12'
 dependencies = [
 	'pypandoc-binary>=1.15',
 	'python-frontmatter>=1.1.0',
