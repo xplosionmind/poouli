@@ -8,7 +8,7 @@ import yaml
 import frontmatter as fm
 from datetime import datetime, timezone
 
-from load_config import load_config
+from .load_config import load_config
 
 def print_snippet(cfg, note_metadata):
 	if type(note_metadata.get('wiki_styling')) is str:
