@@ -85,6 +85,6 @@ def push_wiki(page, title, note_path, snippet):
 	page.text = page_content
 	page.save(summary='Updated via Pöuli')
 
-if __name__ == '__main__':
+def main():
 	cfg = load_config()
 	sync_wiki(cfg)
