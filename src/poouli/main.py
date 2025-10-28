@@ -54,10 +54,7 @@ def sync_wiki(cfg):
 			# if there are no source files specified in the config file, the snippet preferences are not loaded anyways
 			snippet = print_snippet(cfg, note_metadata)
 			if 'updated' in note_metadata and wiki_updated != None:
-				note_updated = note_metadata['updated']
-				print(f'note_updated: {datetime.isoformat(note_updated)}\nwiki_updated: {datetime.isoformat(wiki_updated)}')
-				print(f'server time: {site.server_time()}')
-				if wiki_updated > note_updated:
+				if wiki_updated > note_metadata['updated']:
 					pull_wiki(page, note_path, wiki_updated)
 				else:
 					push_wiki(page, wiki_title, note_path, snippet)
