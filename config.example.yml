@@ -1,0 +1,6 @@
+local_directory: '~/where/notes/are' # Both absolute and relative paths are valid
+wiki_base_path: 'User:Oulipo/Test'
+banner: | # Any indented new line is preserved
+  <div style='display: block; color: #FFF; background: #D00000; padding: .5em 1em; margin: 1em auto 3em; width: calc(100% - 6em); box-shadow: 5px 5px 0 #000'>This page was generated using [https://codeberg.org/tommi/poouli Pöuli].</div>
+styling: | # Any indented new line is preserved
+  <div style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FCC920; z-index: -1; pointer-events: none; outline: solid 1rem #FCC920'></div>
