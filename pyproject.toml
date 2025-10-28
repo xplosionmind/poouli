@@ -27,7 +27,6 @@ keywords = [
 	'Zettelkasten'
 ]
 classifiers = [
-	'License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)',
 	'Development Status :: 3 - Alpha',
 	'Environment :: Console',
 	'Natural Language :: English',
