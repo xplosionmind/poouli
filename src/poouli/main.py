@@ -32,11 +32,13 @@ def print_snippet(cfg, note_metadata):
 def sync_wiki(cfg):
 	site = pwb.Site('en', 'pzwiki')
 	local_directory = Path(cfg['local_directory']).expanduser()
-	print(f'🔎 Local folder: {local_directory}')
+	print(f'Local folder: {local_directory}')
+	print(type(os.listdir(local_directory)))
+	print(os.listdir(local_directory))
 	for note in os.listdir(local_directory):
 		note_path = os.path.join(local_directory, note)
 		note_metadata = fm.load(note_path).metadata
-		print(f'Metadata of “{note_path}”: {note_metadata}')
+		print(f'Processing {note_path}')
 		if note_metadata.get('wiki_exclude') != True:
 			if 'wiki_title' in note_metadata:
 				wiki_title = note_metadata.get('wiki_title')
@@ -47,20 +49,27 @@ def sync_wiki(cfg):
 			page = pwb.Page(site, str(wiki_title))
 			if page.exists():
 				wiki_updated = page.latest_revision.timestamp.replace(tzinfo=timezone.utc)
-				print(f'latest revision: {wiki_updated}')
+				print(f'Latest revision on wiki: {wiki_updated}')
+				print(f'Type of wiki_updated: {type(wiki_updated)}')
+				print(f'Type of note_metadata[\'updated\']: {type(note_metadata['updated'])}')
 			else:
 				wiki_updated = None
 				print(f'Page “{wiki_title}” does not exist, creating it…')
 			# if there are no source files specified in the config file, the snippet preferences are not loaded anyways
 			snippet = print_snippet(cfg, note_metadata)
 			if 'updated' in note_metadata and wiki_updated != None:
+				if isinstance(note_metadata['updated'], str):
+					note_metadata['updated'] = datetime.fromisoformat(note_metadata['updated'])
 				if wiki_updated > note_metadata['updated']:
-					pull_wiki(page, note_path, wiki_updated)
+					pull = input(f'It looks like there is a newer version of {wiki_title} on the Wiki. Do you want to pull it [y/n]? ').lower()
+					if 'y' in pull:
+						pull_wiki(page, note_path, wiki_updated)
 				else:
 					push_wiki(page, wiki_title, note_path, snippet)
 			else:
-				# If there is no local updated date, the page is pushed regardless of the last page revision on the wiki.
-				push_wiki(page, wiki_title, note_path, snippet)
+				push = input(f'The local file for {wiki_title} has no updated date. Do you want to push it [y/n]? ').lower()
+				if 'y' in push:
+					push_wiki(page, wiki_title, note_path, snippet)
 		else:
 			print(f'`wiki_exclude` is True for {note_path}')
 
@@ -82,6 +91,5 @@ def push_wiki(page, title, note_path, snippet):
 	page.text = page_content
 	page.save(summary='Updated via Pöuli')
 
-def main():
-	cfg = load_config()
-	sync_wiki(cfg)
+cfg = load_config()
+sync_wiki(cfg)
